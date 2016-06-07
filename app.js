@@ -10,25 +10,29 @@ var constraints = window.constraints = {
 };
 var errorElement = document.querySelector('#errorMsg');
 
-navigator.mediaDevices.getUserMedia(constraints)
-	.then(function(stream) {
-		var videoTracks = stream.getVideoTracks();
-		console.log('Requisiti:', constraints);
-		console.log('Device usato: ' + videoTracks[0].label);
-		stream.onended = function() {
-			console.log('Fine stream');
-		};
-		window.stream = stream;
-		video.srcObject = stream;
-	})
-	.catch(function(error) {
-		if (error.name === 'ConstraintNotSatisfiedError') {
-			errorMsg('Risoluzione non supportata');
-		} else if (error.name === 'PermissionDeniedError') {
-			errorMsg('Non hai i permessi necessari');
-		}
-		errorMsg(error.name, error);
-	});
+var startMedia = function(c){
+	navigator.mediaDevices.getUserMedia(c)
+		.then(function(stream) {
+			var videoTracks = stream.getVideoTracks();
+			console.log('Requisiti:', constraints);
+			console.log('Device usato: ' + videoTracks[0].label);
+			stream.onended = function() {
+				console.log('Fine stream');
+			};
+			window.stream = stream;
+			video.srcObject = stream;
+		})
+		.catch(function(error) {
+			if (error.name === 'ConstraintNotSatisfiedError') {
+				errorMsg('Risoluzione non supportata');
+			} else if (error.name === 'PermissionDeniedError') {
+				errorMsg('Non hai i permessi necessari');
+			}
+			errorMsg(error.name, error);
+		});
+}
+
+startMedia(constraints);
 
 function errorMsg(msg, error) {
 	errorElement.innerHTML += '<p>' + msg + '</p>';
@@ -38,5 +42,6 @@ function errorMsg(msg, error) {
 }
 
 function change(){
-
+	alert("Come?")
+	startMedia(constraints);
 }
