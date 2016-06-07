@@ -66,7 +66,6 @@ navigator.getUserMedia({video: true}, function(stream) {
 }, errorCallback);*/
 
 function init(){
-	alert("Io vengo chiamato?")
 	var streaming = false,
 		video        = document.querySelector('#video'),
 		canvas       = document.querySelector('#canvas'),
@@ -93,7 +92,7 @@ function init(){
 		},
 		function(err) {
 			console.error("Errore cosa?");
-			console.error(err);
+			alert(err);
 		}
 	);
 
