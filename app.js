@@ -65,7 +65,7 @@ navigator.getUserMedia({video: true}, function(stream) {
 	localMediaStream = stream;
 }, errorCallback);*/
 
-function init(){
+/*function init(){
 	var streaming = false,
 		video        = document.querySelector('#video'),
 		canvas       = document.querySelector('#canvas'),
@@ -121,4 +121,117 @@ function init(){
 	}, false);
 }
 
-init();
+init();*/
+
+'use strict';
+
+/*var promisifiedOldGUM = function(constraints) {
+
+	// First get ahold of getUserMedia, if present
+	var getUserMedia = (navigator.getUserMedia ||
+	navigator.webkitGetUserMedia ||
+	navigator.mozGetUserMedia);
+
+	// Some browsers just don't implement it - return a rejected promise with an error
+	// to keep a consistent interface
+	if(!getUserMedia) {
+		return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+	}
+
+	// Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+	return new Promise(function(resolve, reject) {
+		getUserMedia.call(navigator, constraints, resolve, reject);
+	});
+
+}*/
+
+// Older browsers might not implement mediaDevices at all, so we set an empty object first
+if(navigator.mediaDevices === undefined) {
+	alert("Media devices non implementati");
+	navigator.mediaDevices = {};
+}
+else {
+	alert("Media devices implementati");
+	console.log(navigator.mediaDevices);
+}
+
+// Some browsers partially implement mediaDevices. We can't just assign an object
+// with getUserMedia as it would overwrite existing properties.
+// Here, we will just add the getUserMedia property if it's missing.
+if(navigator.mediaDevices.getUserMedia === undefined) {
+	alert("Get user media non implementato");
+	//navigator.mediaDevices.getUserMedia = promisifiedOldGUM;
+}
+else {
+	alert("Get user media implementato");
+	console.log(navigator.mediaDevices.getUserMedia);
+}
+
+
+// Prefer camera resolution nearest to 1280x720.
+/*var constraints = { audio: false, video: { width: 1280, height: 720 } };
+
+alert("Ora chiamero' getUserMedia");
+navigator.mediaDevices.getUserMedia(constraints)
+	.then(function(stream) {
+		alert("OH!")
+		var videoTracks = stream.getVideoTracks();
+		console.log('Got stream with constraints:', constraints);
+		console.log('Using video device: ' + videoTracks[0].label);
+		stream.onended = function() {
+			console.log('Stream ended');
+		};
+		window.stream = stream; // make variable available to browser console
+		video.srcObject = stream;
+	})
+	.catch(function(error) {
+		if (error.name === 'ConstraintNotSatisfiedError') {
+			alert('The resolution ' + constraints.video.width.exact + 'x' +
+				constraints.video.width.exact + ' px is not supported by your device.');
+		} else if (error.name === 'PermissionDeniedError') {
+			alert('Permissions have not been granted to use your camera and ' +
+				'microphone, you need to allow the page access to your devices in ' +
+				'order for the demo to work.');
+		}
+		alert('getUserMedia error: ' + error.name, error);
+	});
+	*/
+
+var video = document.querySelector('video');
+var constraints = window.constraints = {
+	audio: false,
+	video: true
+};
+var errorElement = document.querySelector('#errorMsg');
+
+navigator.mediaDevices.getUserMedia(constraints)
+	.then(function(stream) {
+		alert("IO");
+		var videoTracks = stream.getVideoTracks();
+		console.log('Got stream with constraints:', constraints);
+		console.log('Using video device: ' + videoTracks[0].label);
+		stream.onended = function() {
+			console.log('Stream ended');
+		};
+		window.stream = stream; // make variable available to browser console
+		video.srcObject = stream;
+	})
+	.catch(function(error) {
+		alert("NON CAPISCO");
+		if (error.name === 'ConstraintNotSatisfiedError') {
+			errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
+				constraints.video.width.exact + ' px is not supported by your device.');
+		} else if (error.name === 'PermissionDeniedError') {
+			errorMsg('Permissions have not been granted to use your camera and ' +
+				'microphone, you need to allow the page access to your devices in ' +
+				'order for the demo to work.');
+		}
+		errorMsg('getUserMedia error: ' + error.name, error);
+	});
+
+function errorMsg(msg, error) {
+	errorElement.innerHTML += '<p>' + msg + '</p>';
+	if (typeof error !== 'undefined') {
+		console.error(error);
+	}
+}
