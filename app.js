@@ -230,8 +230,10 @@ navigator.mediaDevices.getUserMedia(constraints)
 	});
 
 function errorMsg(msg, error) {
-	errorElement.innerHTML += '<p>' + msg + '</p>';
+	console.log(msg);
+	alert(msg);
 	if (typeof error !== 'undefined') {
-		console.error(error);
+		console.log(error);
+		alert(error);
 	}
 }
