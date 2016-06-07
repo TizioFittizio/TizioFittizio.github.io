@@ -2,9 +2,21 @@
 
 'use strict';
 
+var width = 1280;
+var height = 720;
 var front = false;
 
 var video = document.querySelector('video');
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+
+video.addEventListener('canplay', function(ev){
+	video.setAttribute('width', width);
+	video.setAttribute('height', height);
+	canvas.setAttribute('width', width);
+	canvas.setAttribute('height', height);
+}, false);
+
 var constraints = window.constraints = {
 	audio: false,
 	video: {
@@ -62,10 +74,11 @@ function change(){
 	startMedia(constraints2);
 }
 
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+
 
 function screenshot() {
+	canvas.width = width;
+	canvas.height = height;
 	if (window.stream) {
 		ctx.drawImage(video, 0, 0);
 		document.querySelector('img').src = canvas.toDataURL('image/webp');
