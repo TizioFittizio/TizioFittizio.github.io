@@ -10,7 +10,7 @@ var constraints = window.constraints = {
 };
 var errorElement = document.querySelector('#errorMsg');
 
-/*navigator.mediaDevices.getUserMedia(constraints)
+navigator.mediaDevices.getUserMedia(constraints)
 	.then(function(stream) {
 		var videoTracks = stream.getVideoTracks();
 		console.log('Requisiti:', constraints);
@@ -28,7 +28,7 @@ var errorElement = document.querySelector('#errorMsg');
 			errorMsg('Non hai i permessi necessari');
 		}
 		errorMsg(error.name, error);
-	});*/
+	});
 
 function errorMsg(msg, error) {
 	errorElement.innerHTML += '<p>' + msg + '</p>';
@@ -38,26 +38,5 @@ function errorMsg(msg, error) {
 }
 
 function change(){
-	var constr = Math.random() > 0.5 ?
-		{ audio: false, video: { facingMode: "user" } } :
-		{ audio: true, video: { facingMode: { exact: "environment" } } }
-	navigator.mediaDevices.getUserMedia(constr)
-		.then(function(stream) {
-			var videoTracks = stream.getVideoTracks();
-			console.log('Requisiti:', constraints);
-			console.log('Device usato: ' + videoTracks[0].label);
-			stream.onended = function() {
-				console.log('Fine stream');
-			};
-			window.stream = stream;
-			video.srcObject = stream;
-		})
-		.catch(function(error) {
-			if (error.name === 'ConstraintNotSatisfiedError') {
-				errorMsg('Risoluzione non supportata');
-			} else if (error.name === 'PermissionDeniedError') {
-				errorMsg('Non hai i permessi necessari');
-			}
-			errorMsg(error.name, error);
-		});
+
 }
