@@ -7,11 +7,16 @@ var front = false;
 var video = document.querySelector('video');
 var constraints = window.constraints = {
 	audio: false,
-	video: true
+	video: {
+		mandatory: {
+			minWidth: 1280,
+			minHeight: 720
+		}
+	}
 };
 
 var constraints2 = window.constraints = {
-	 video: { facingMode: (front? "user" : "environment") }
+	 video: { facingMode: (front ? "user" : "environment") }
 }
 
 
@@ -46,7 +51,7 @@ var startMedia = function(c){
 startMedia(constraints);
 
 function errorMsg(msg, error) {
-	errorElement.innerHTML += '<p>' + msg + '</p>';
+	errorElement.innerHTML = '<p>' + msg + '</p>';
 	if (typeof error !== 'undefined') {
 		console.error(error);
 	}
