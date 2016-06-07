@@ -2,15 +2,26 @@
 
 'use strict';
 
+var front = false;
 
 var video = document.querySelector('video');
 var constraints = window.constraints = {
 	audio: false,
 	video: true
 };
+
+var constraints2 = window.constraints = {
+	 video: { facingMode: (front? "user" : "environment") }
+}
+
+
 var errorElement = document.querySelector('#errorMsg');
 
 var startMedia = function(c){
+	if (window.stream) {
+		video.src = null;
+		window.stream.stop();
+	}
 	navigator.mediaDevices.getUserMedia(c)
 		.then(function(stream) {
 			var videoTracks = stream.getVideoTracks();
@@ -42,6 +53,16 @@ function errorMsg(msg, error) {
 }
 
 function change(){
-	alert("Come?")
-	startMedia(constraints);
+	front = !front;
+	startMedia(constraints2);
+}
+
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+
+function screenshot() {
+	if (window.stream) {
+		ctx.drawImage(video, 0, 0);
+		document.querySelector('img').src = canvas.toDataURL('image/webp');
+	}
 }
