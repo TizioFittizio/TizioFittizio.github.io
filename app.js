@@ -74,7 +74,7 @@ function screenshot() {
 		}*/
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		var data = imgData.data;
-		/*for (var y = 0; y < canvas.height; y++) {
+		for (var y = 0; y < canvas.height; y++) {
 			for(var x = 0; x < canvas.width; x++) {
 				var red = data[((canvas.width * y) + x) * 4];
 				var green = data[((canvas.width * y) + x) * 4 + 1];
@@ -84,11 +84,11 @@ function screenshot() {
 				else ctx.globalAlpha = 0;
 				ctx.fillRect(x, y, 1, 1);
 			}
-		}*/
+		}
 		if (flicker){
 			ctx.globalAlpha = 1;
 			ctx.style = "yellow";
-			ctx.fillRect(0, 0, 1, 1);
+			ctx.fillRect(0, 0, 10, 10);
 		}
 		flicker = !flicker;
 		//document.querySelector('img').src = canvas.toDataURL('image/webp');
