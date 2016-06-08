@@ -17,15 +17,7 @@ video.addEventListener('canplay', function(ev){
 	canvas.setAttribute('height', height);
 }, false);
 
-var constraints = window.constraints = {
-	audio: false,
-	video: {
-		mandatory: {
-			maxWidth: 320,
-			maxHeight: 200
-		}
-	}
-};
+var constraints = { video: { facingMode: "environment" } };
 
 var constraints2 = window.constraints = {
 	 video: { facingMode: (front ? "user" : "environment") }
@@ -72,7 +64,21 @@ function screenshot() {
 	canvas.width = width;
 	canvas.height = height;
 	if (window.stream) {
+		ctx.globalAlpha = 1;
 		ctx.drawImage(video, 0, 0);
+		ctx.fillStyle = "red";
+		/*var imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+		var data = imgData.data;
+		for (var i=0; i <data.length; i+=4) {
+			var red = data[i];
+			var green = data[i+1];
+			var blue = data[i+2];
+			var alpha = data[i+3];
+			if (green + blue + red >= 250) ctx.globalAlpha = 1;
+			else ctx.globalAlpha = 0;
+			ctx.fillRect()
+		}*/
+		ctx.fillRect(100, 100, 100, 100);
 		//document.querySelector('img').src = canvas.toDataURL('image/webp');
 	}
 }
