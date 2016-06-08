@@ -61,10 +61,10 @@ function errorMsg(msg, error) {
 
 function change(){
 	front = !front;
-	console.log(camerasId[currentCamera]);
+	alert(camerasId[currentCamera]);
 	currentCamera ++;
-	console.log("-----");
-	console.log(camerasId[currentCamera]);
+	alert("-----");
+	alert(camerasId[currentCamera]);
 	startMedia(constraints2);
 }
 
@@ -142,6 +142,22 @@ else {
 				//alert(err.name + ": " + error.message);
 			});
 }
+
+MediaStreamTrack.getSources(function(sourceInfos) {
+	var videoSourceId;
+	for (var i = 0; i != sourceInfos.length; ++i) {
+		var sourceInfo = sourceInfos[i];
+		if(sourceInfo.kind == "video" && sourceInfo.facing == "environment") {
+			videoSourceId = sourceInfo.id;
+		}
+	}
+	constraints2 = {
+		audio: false,
+		video: {
+			optional: [{sourceId: videoSourceId}]
+		}
+	};
+});
 
 
 init();
