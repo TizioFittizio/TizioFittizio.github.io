@@ -31,14 +31,9 @@ var constraints2 = window.constraints = {
 	 video: { facingMode: (front ? "user" : "environment") }
 }
 
-
 var errorElement = document.querySelector('#errorMsg');
 
 var startMedia = function(c){
-	if (window.stream) {
-		video.src = null;
-		window.stream.stop();
-	}
 	navigator.mediaDevices.getUserMedia(c)
 		.then(function(stream) {
 			var videoTracks = stream.getVideoTracks();
@@ -60,8 +55,6 @@ var startMedia = function(c){
 		});
 }
 
-startMedia(constraints);
-
 function errorMsg(msg, error) {
 	errorElement.innerHTML = '<p>' + msg + '</p>';
 	alert(msg);
@@ -75,8 +68,6 @@ function change(){
 	startMedia(constraints2);
 }
 
-
-
 function screenshot() {
 	canvas.width = width;
 	canvas.height = height;
@@ -85,3 +76,15 @@ function screenshot() {
 		document.querySelector('img').src = canvas.toDataURL('image/webp');
 	}
 }
+
+function gameLoop() {
+	window.setTimeout(gameLoop, 20);
+	screenshot();
+}
+
+function init(){
+	startMedia(constraints);
+	gameLoop();
+}
+
+init();
