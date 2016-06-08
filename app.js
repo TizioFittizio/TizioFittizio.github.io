@@ -2,8 +2,8 @@
 
 'use strict';
 
-var width = 800;
-var height = 600;
+var width = 320;
+var height = 200;
 var front = false;
 
 var video = document.querySelector('video');
@@ -21,8 +21,8 @@ var constraints = window.constraints = {
 	audio: false,
 	video: {
 		mandatory: {
-			minWidth: 720,
-			minHeight: 480
+			maxWidth: 320,
+			maxHeight: 200
 		}
 	}
 };
@@ -73,7 +73,7 @@ function screenshot() {
 	canvas.height = height;
 	if (window.stream) {
 		ctx.drawImage(video, 0, 0);
-		document.querySelector('img').src = canvas.toDataURL('image/webp');
+		//document.querySelector('img').src = canvas.toDataURL('image/webp');
 	}
 }
 
