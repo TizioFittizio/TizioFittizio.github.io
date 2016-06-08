@@ -10,6 +10,9 @@ var video = document.querySelector('video');
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
+var camerasId = [];
+var currentCamera = 0;
+
 video.addEventListener('canplay', function(ev){
 	//canvas.setAttribute('width', 800);
 	//canvas.setAttribute('height', 600);
@@ -17,8 +20,10 @@ video.addEventListener('canplay', function(ev){
 
 var constraints = { video: { width: 3840, height: 2160 } };
 
-var constraints2 = window.constraints = {
-	 video: { facingMode: (front ? "user" : "environment") }
+var constraints2 = {
+	video: {
+		optional: [{sourceId: camerasId[currentCamera]}]
+	}
 }
 
 var errorElement = document.querySelector('#errorMsg');
@@ -56,6 +61,10 @@ function errorMsg(msg, error) {
 
 function change(){
 	front = !front;
+	console.log(camerasId[currentCamera]);
+	currentCamera ++;
+	console.log("-----");
+	console.log(camerasId[currentCamera]);
 	startMedia(constraints2);
 }
 
@@ -110,6 +119,7 @@ function loop() {
 }
 
 function init(){
+
 	startMedia(constraints);
 	loop();
 }
@@ -118,12 +128,15 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
 	alert("Impossibile enumerare i dispositivi");
 }
 else {
+
 	navigator.mediaDevices.enumerateDevices()
 			.then(function(devices) {
 				devices.forEach(function(device) {
-					alert(device.kind + ": " + device.label +
+					console.log(device.kind + ": " + device.label +
 							" id = " + device.deviceId);
+					if (device.kind == "videoinput") camerasId.push(device.deviceId);
 				});
+				for (var i = 0; i < camerasId.length; i++) alert(camerasId[i]);
 			})
 			.catch(function(err) {
 				alert(err.name + ": " + error.message);
