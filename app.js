@@ -15,7 +15,7 @@ video.addEventListener('canplay', function(ev){
 	canvas.setAttribute('height', height);
 }, false);
 
-var constraints = { video: { facingMode: "environment" } };
+var constraints = { video: { width: 1280, height: 720 } };
 
 var constraints2 = window.constraints = {
 	 video: { facingMode: (front ? "user" : "environment") }
@@ -56,6 +56,10 @@ function errorMsg(msg, error) {
 function change(){
 	front = !front;
 	startMedia(constraints2);
+}
+
+function takeScreenshot(){
+	document.querySelector('img').src = canvas.toDataURL('image/webp');
 }
 
 function screenshot() {
