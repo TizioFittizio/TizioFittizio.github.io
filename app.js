@@ -15,7 +15,7 @@ video.addEventListener('canplay', function(ev){
 	//canvas.setAttribute('height', 600);
 }, false);
 
-var constraints = { video: { width: 1280, height: 720 } };
+var constraints = { video: { width: 3840, height: 2160 } };
 
 var constraints2 = window.constraints = {
 	 video: { facingMode: (front ? "user" : "environment") }
@@ -28,6 +28,9 @@ var startMedia = function(c){
 	navigator.mediaDevices.getUserMedia(c)
 		.then(function(stream) {
 			var videoTracks = stream.getVideoTracks();
+			for (var i = 0; i < videoTracks.length; i++){
+				alert(videoTracks[i].label);
+			}
 			console.log('Requisiti:', constraints);
 			console.log('Device usato: ' + videoTracks[0].label);
 			stream.onended = function() {
@@ -69,7 +72,7 @@ function takeScreenshot(){
 			var green = data[((canvas.width * y) + x) * 4 + 1];
 			var blue = data[((canvas.width * y) + x) * 4 + 2];
 			var alpha = data[((canvas.width * y) + x) * 4 + 3];
-			if (green + blue + red > 250 && false) ctx.globalAlpha = 1;
+			if (green + blue + red > 250) ctx.globalAlpha = 1;
 			else ctx.globalAlpha = 0;
 			ctx.fillRect(x, y, 1, 1);
 		}
@@ -83,7 +86,7 @@ function screenshot() {
 	canvas.height = 720;
 	if (window.stream) {
 		ctx.globalAlpha = 1;
-		ctx.drawImage(video, 0, 0);
+		ctx.drawImage(video, 0, 0, 1280, 720);
 		/*for (var i=0; i <data.length; i+=4) {
 			var red = data[i];
 			var green = data[i+1];
