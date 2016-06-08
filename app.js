@@ -159,5 +159,8 @@ else {
 	};
 });*/
 
+document.getElementById('canvas').addEventListener('click',function(evt){
+	alert(evt.clientX + ',' + evt.clientY);
+},false);
 
 init();
