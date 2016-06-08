@@ -11,8 +11,8 @@ var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
 video.addEventListener('canplay', function(ev){
-	canvas.setAttribute('width', width);
-	canvas.setAttribute('height', height);
+	//canvas.setAttribute('width', 800);
+	//canvas.setAttribute('height', 600);
 }, false);
 
 var constraints = { video: { width: 1280, height: 720 } };
@@ -69,7 +69,7 @@ function takeScreenshot(){
 			var green = data[((canvas.width * y) + x) * 4 + 1];
 			var blue = data[((canvas.width * y) + x) * 4 + 2];
 			var alpha = data[((canvas.width * y) + x) * 4 + 3];
-			if (green + blue + red > 250) ctx.globalAlpha = 1;
+			if (green + blue + red > 250 && false) ctx.globalAlpha = 1;
 			else ctx.globalAlpha = 0;
 			ctx.fillRect(x, y, 1, 1);
 		}
@@ -79,8 +79,8 @@ function takeScreenshot(){
 }
 
 function screenshot() {
-	canvas.width = width;
-	canvas.height = height;
+	canvas.width = 1280;
+	canvas.height = 720;
 	if (window.stream) {
 		ctx.globalAlpha = 1;
 		ctx.drawImage(video, 0, 0);
