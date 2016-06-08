@@ -11,8 +11,6 @@ var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
 video.addEventListener('canplay', function(ev){
-	video.setAttribute('width', width);
-	video.setAttribute('height', height);
 	canvas.setAttribute('width', width);
 	canvas.setAttribute('height', height);
 }, false);
@@ -61,13 +59,11 @@ function change(){
 }
 
 function screenshot() {
-	video.width = width;
-	video.height = height;
 	canvas.width = width;
 	canvas.height = height;
 	if (window.stream) {
 		ctx.globalAlpha = 1;
-		ctx.drawImage(video, 0, 0, 320, 200);
+		ctx.drawImage(video, 0, 0);
 		ctx.fillStyle = "red";
 		/*for (var i=0; i <data.length; i+=4) {
 			var red = data[i];
@@ -76,9 +72,9 @@ function screenshot() {
 			var alpha = data[i+3];
 
 		}*/
-		var data = imgData.data;
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		for (var y = 0; y < canvas.height; y++) {
+		var data = imgData.data;
+		/*for (var y = 0; y < canvas.height; y++) {
 			for(var x = 0; x < canvas.width; x++) {
 				var red = data[((canvas.width * y) + x) * 4];
 				var green = data[((canvas.width * y) + x) * 4 + 1];
@@ -88,11 +84,18 @@ function screenshot() {
 				else ctx.globalAlpha = 0;
 				ctx.fillRect(x, y, 1, 1);
 			}
+		}*/
+		if (flicker){
+			ctx.globalAlpha = 1;
+			ctx.style = "yellow";
+			ctx.fillRect(0, 0, 1, 1);
 		}
-		ctx.fillRect(100, 100, 100, 100);
+		flicker = !flicker;
 		//document.querySelector('img').src = canvas.toDataURL('image/webp');
 	}
 }
+
+var flicker = false;
 
 function loop() {
 	screenshot();
