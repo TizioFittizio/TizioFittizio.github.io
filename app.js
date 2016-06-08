@@ -143,7 +143,7 @@ else {
 			});
 }
 
-MediaStreamTrack.getSources(function(sourceInfos) {
+/*MediaStreamTrack.getSources(function(sourceInfos) {
 	var videoSourceId;
 	for (var i = 0; i != sourceInfos.length; ++i) {
 		var sourceInfo = sourceInfos[i];
@@ -157,7 +157,7 @@ MediaStreamTrack.getSources(function(sourceInfos) {
 			optional: [{sourceId: videoSourceId}]
 		}
 	};
-});
+});*/
 
 
 init();
