@@ -78,8 +78,10 @@ function screenshot() {
 }
 
 function gameLoop() {
-	window.setTimeout(gameLoop, 20);
 	screenshot();
+	console.log("Rendering!");
+	window.setTimeout(gameLoop, 20);
+
 }
 
 function init(){
