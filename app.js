@@ -61,38 +61,49 @@ function change(){
 }
 
 function screenshot() {
+	video.width = width;
+	video.height = height;
 	canvas.width = width;
 	canvas.height = height;
 	if (window.stream) {
 		ctx.globalAlpha = 1;
-		ctx.drawImage(video, 0, 0);
+		ctx.drawImage(video, 0, 0, 320, 200);
 		ctx.fillStyle = "red";
-		/*var imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
-		var data = imgData.data;
-		for (var i=0; i <data.length; i+=4) {
+		/*for (var i=0; i <data.length; i+=4) {
 			var red = data[i];
 			var green = data[i+1];
 			var blue = data[i+2];
 			var alpha = data[i+3];
-			if (green + blue + red >= 250) ctx.globalAlpha = 1;
-			else ctx.globalAlpha = 0;
-			ctx.fillRect()
+
 		}*/
+		var data = imgData.data;
+		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		for (var y = 0; y < canvas.height; y++) {
+			for(var x = 0; x < canvas.width; x++) {
+				var red = data[((canvas.width * y) + x) * 4];
+				var green = data[((canvas.width * y) + x) * 4 + 1];
+				var blue = data[((canvas.width * y) + x) * 4 + 2];
+				var alpha = data[((canvas.width * y) + x) * 4 + 3];
+				if (green + blue + red <= 250) ctx.globalAlpha = 1;
+				else ctx.globalAlpha = 0;
+				ctx.fillRect(x, y, 1, 1);
+			}
+		}
 		ctx.fillRect(100, 100, 100, 100);
 		//document.querySelector('img').src = canvas.toDataURL('image/webp');
 	}
 }
 
-function gameLoop() {
+function loop() {
 	screenshot();
 	//console.log("Rendering!");
-	window.requestAnimationFrame(gameLoop);
+	window.requestAnimationFrame(loop);
 
 }
 
 function init(){
 	startMedia(constraints);
-	gameLoop();
+	loop();
 }
 
 init();
