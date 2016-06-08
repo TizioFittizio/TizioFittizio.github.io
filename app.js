@@ -64,6 +64,7 @@ startMedia(constraints);
 
 function errorMsg(msg, error) {
 	errorElement.innerHTML = '<p>' + msg + '</p>';
+	alert(msg);
 	if (typeof error !== 'undefined') {
 		console.error(error);
 	}
