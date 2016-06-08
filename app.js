@@ -2,8 +2,8 @@
 
 'use strict';
 
-var width = 1280;
-var height = 720;
+var width = 800;
+var height = 600;
 var front = false;
 
 var video = document.querySelector('video');
@@ -21,8 +21,8 @@ var constraints = window.constraints = {
 	audio: false,
 	video: {
 		mandatory: {
-			minWidth: 1280,
-			minHeight: 720
+			minWidth: 720,
+			minHeight: 480
 		}
 	}
 };
@@ -79,8 +79,8 @@ function screenshot() {
 
 function gameLoop() {
 	screenshot();
-	console.log("Rendering!");
-	window.setTimeout(gameLoop, 20);
+	//console.log("Rendering!");
+	window.requestAnimationFrame(gameLoop);
 
 }
 
