@@ -2,8 +2,8 @@
 
 'use strict';
 
-var width = 320;
-var height = 200;
+var width = 1280;
+var height = 720;
 var front = false;
 
 var video = document.querySelector('video');
@@ -22,6 +22,7 @@ var constraints2 = window.constraints = {
 }
 
 var errorElement = document.querySelector('#errorMsg');
+var images = document.querySelector('#images');
 
 var startMedia = function(c){
 	navigator.mediaDevices.getUserMedia(c)
@@ -61,8 +62,9 @@ function change(){
 function takeScreenshot(){
 	var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 	var data = imgData.data;
+	ctx.fillStyle = "white";
 	for (var y = 0; y < canvas.height; y++) {
-		for(var x = 0; x < canvas.width; x++) {
+		for (var x = 0; x < canvas.width; x++) {
 			var red = data[((canvas.width * y) + x) * 4];
 			var green = data[((canvas.width * y) + x) * 4 + 1];
 			var blue = data[((canvas.width * y) + x) * 4 + 2];
@@ -72,7 +74,8 @@ function takeScreenshot(){
 			ctx.fillRect(x, y, 1, 1);
 		}
 	}
-	document.querySelector('img').src = canvas.toDataURL('image/webp');
+	images.innerHTML += "<img src=" + canvas.toDataURL('image/png') + ">";
+	//document.querySelector('img').src = canvas.toDataURL('image/png');
 }
 
 function screenshot() {
