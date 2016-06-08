@@ -28,9 +28,6 @@ var startMedia = function(c){
 	navigator.mediaDevices.getUserMedia(c)
 		.then(function(stream) {
 			var videoTracks = stream.getVideoTracks();
-			for (var i = 0; i < videoTracks.length; i++){
-				alert(videoTracks[i].label);
-			}
 			console.log('Requisiti:', constraints);
 			console.log('Device usato: ' + videoTracks[0].label);
 			stream.onended = function() {
@@ -116,5 +113,22 @@ function init(){
 	startMedia(constraints);
 	loop();
 }
+
+if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+	alert("Impossibile enumerare i dispositivi");
+}
+else {
+	navigator.mediaDevices.enumerateDevices()
+			.then(function(devices) {
+				devices.forEach(function(device) {
+					alert(device.kind + ": " + device.label +
+							" id = " + device.deviceId);
+				});
+			})
+			.catch(function(err) {
+				alert(err.name + ": " + error.message);
+			});
+}
+
 
 init();
