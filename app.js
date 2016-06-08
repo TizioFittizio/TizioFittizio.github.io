@@ -136,10 +136,10 @@ else {
 							" id = " + device.deviceId);
 					if (device.kind == "videoinput") camerasId.push(device.deviceId);
 				});
-				for (var i = 0; i < camerasId.length; i++) alert(camerasId[i]);
+				//for (var i = 0; i < camerasId.length; i++) alert(camerasId[i]);
 			})
 			.catch(function(err) {
-				alert(err.name + ": " + error.message);
+				//alert(err.name + ": " + error.message);
 			});
 }
 
