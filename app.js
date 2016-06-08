@@ -2,8 +2,8 @@
 
 'use strict';
 
-var width = 1280;
-var height = 720;
+var width = 320;
+var height = 200;
 var front = false;
 
 var video = document.querySelector('video');
