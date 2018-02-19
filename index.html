@@ -21,7 +21,7 @@
     <script type="text/javascript">
 
         let type = "WebGL"
-        if (!PIXI.utils.isWebGLSupported()){
+        if (!PIXI.utils.isWebGLSupported() || true){
             type = "canvas"
         }
 
