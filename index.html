@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello World</title>
+  <script src="pixi.min.js"></script>
+  <script src="pixi-sound.js"></script>
+  <script src="public/build/app.js"></script>
+  <style>
+      /*body {
+          margin: 0
+      }
+      canvas {
+          width: 100%;
+          height: 100%
+      }*/
+  </style>
+</head>
+  
+<body id="body">
+    <script type="text/javascript">
+
+        let type = "WebGL"
+        if (!PIXI.utils.isWebGLSupported()){
+            type = "canvas"
+        }
+
+        PIXI.utils.sayHello(type);
+
+        //Create a Pixi Application
+        let app = new PIXI.Application({
+            width: 412, 
+            height: 732,
+            antialias: true, 
+            transparent: false, 
+            resolution: 1
+        });
+        
+
+        //Add the canvas that Pixi automatically created for you to the HTML document
+        document.body.appendChild(app.view);
+
+        core(PIXI, app);
+
+    </script>
+</body>
+</html>
